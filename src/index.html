@@ -4,19 +4,29 @@
 <head>
   <meta charset="UTF-8">
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="theme/css/normalize.css">
+  <link rel="stylesheet" href="">
   <link rel="stylesheet" href="theme/css/skeleton.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
 
 <body>
-  <!-- The above form looks like this -->
-  <form>
+  <form id="eventForm">
     <div class="row">
       <div class="six columns">
-        <label for="exampleEmailInput">Nombre del evento</label>
-        <input class="u-full-width" type="text">
+        <label for="exampleEmailInput">Usuario</label>
+        <input class="u-full-width" type="text" id="User">
+      </div>
+      <div class="six columns">
+        <label for="exampleEmailInput">Evento</label>
+        <input class="u-full-width" type="text" id="Event">
+      </div>
+  
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <label for="exampleEmailInput">Mensaje</label>
+        <input class="u-full-width" type="text" id="Comment">
       </div>
       <div class="six columns">
         <label for="exampleEmailInput">Fecha</label>
@@ -30,29 +40,58 @@
         </div>
       </div>
     </div>
-    <label for="exampleMessage" style="text-align: center;">Mensaje</label>
-    <textarea class="u-full-width" id="exampleMessage" placeholder="Comenzando app... "></textarea>
+
     <div class="allButtons">
       <input class="button-primary" type="submit" value="Enviar">
     </div>
 
-    <div class="tablaTareas">
-      <table class="u-full-width">
-        <thead>
-          <tr>
-            <th>Mensaje</th>
-            <th>Evento</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-      </table>
-    </div>
   </form>
+  <div class="tablaTareas">
+    <table class="u-full-width" id="dataTable">
+      <thead>
+        <tr>
+          <th>Mensaje</th>
+          <th>Evento</th>
+          <th>Fecha y Hora</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
 </body>
+
+<script>
+  document.getElementById('eventForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevents the default form submission
+
+    // Get form values
+    var user = document.querySelector('#User').value;
+    var events = document.querySelector('#Event').value;
+    var date = document.querySelector('#datetime').value; 
+    var message = document.querySelector('#Comment').value;
+
+    // Create a new table row
+    var newRow = document.createElement('tr');
+
+    // Add table data cells with the form values
+    newRow.innerHTML = '<td>' + user + '</td>' +
+                       '<td>' + events + '</td>' +
+                       '<td>' + date + '</td>' +
+                       '<td>' + message +'</td>' +
+                       '<td>' + state +'</td>'
+
+    // Append the new row to the table
+    document.querySelector('#dataTable tbody').appendChild(newRow);
+
+    // Clear form fields after submission if needed
+    document.querySelector('#User').value = '';
+    document.querySelector('#Event').value = '';
+    document.querySelector('#datetime').value = '';
+    document.querySelector('#Comment').value = '';
+  });
+</script>
 
 </html>
