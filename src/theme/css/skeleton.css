@@ -120,8 +120,9 @@
 }
 
 #fechaAlm{
-  display: flex;
-  justify-content: center;
+  display: grid;
+  place-items: center;
+  margin-top: 100px;
   top: 0;
   bottom: 0;
   height: 100%;
