@@ -21,7 +21,7 @@
         <label for="exampleEmailInput">Evento</label>
         <input class="u-full-width" type="text" id="Event">
       </div>
-  
+
     </div>
     <div class="row">
       <div class="six columns">
@@ -41,6 +41,14 @@
       </div>
     </div>
 
+    <div class="row">
+      <label for="exampleEmailInput">Estado</label>
+
+    </div>
+
+    <div class="row">
+      <input type="checkbox" id="Status" checked>
+    </div>
     <div class="allButtons">
       <input class="button-primary" type="submit" value="Enviar">
     </div>
@@ -53,7 +61,9 @@
           <th>Mensaje</th>
           <th>Evento</th>
           <th>Fecha y Hora</th>
+          <th>Mensaje</th>
           <th>Estado</th>
+          <th>Eliminar</th>
         </tr>
       </thead>
       <tbody>
@@ -65,32 +75,58 @@
 
 <script>
   document.getElementById('eventForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevents the default form submission
+    event.preventDefault();
 
-    // Get form values
+
     var user = document.querySelector('#User').value;
     var events = document.querySelector('#Event').value;
-    var date = document.querySelector('#datetime').value; 
+    var date = document.querySelector('#datetime').value;
     var message = document.querySelector('#Comment').value;
+    var status = document.querySelector('#Status').checked ? 'Activado' : 'Desactivado';
 
-    // Create a new table row
     var newRow = document.createElement('tr');
 
-    // Add table data cells with the form values
+
     newRow.innerHTML = '<td>' + user + '</td>' +
-                       '<td>' + events + '</td>' +
-                       '<td>' + date + '</td>' +
-                       '<td>' + message +'</td>' +
-                       '<td>' + state +'</td>'
+      '<td>' + events + '</td>' +
+      '<td>' + date + '</td>' +
+      '<td>' + message + '</td>' +
+      '<td>' + status + '</td>' +
+      '<td><button class="deleteButton">Eliminar</button></td>';
 
-    // Append the new row to the table
     document.querySelector('#dataTable tbody').appendChild(newRow);
+    document.addEventListener('click', function (event) {
+      if (event.target.classList.contains('deleteButton')) {
+        console.log('Columna eliminada:', getRowData(event.target))
+        deleteRow(event.target);
+      }
+    });
 
-    // Clear form fields after submission if needed
+    function deleteRow(button) {
+      var row = button.parentNode.parentNode;
+      if (row && row.parentNode) {
+        row.parentNode.removeChild(row);
+      }
+    }
+    function getRowData(button) {
+    var row = button.parentNode.parentNode;
+    var cells = row.querySelectorAll('td');
+    var rowData = {};
+
+    for (var i = 0; i < cells.length; i++) {
+      var header = document.querySelector('#dataTable th:nth-child(' + (i + 1) + ')').innerText;
+      rowData[header] = cells[i].innerText;
+    }
+
+    return rowData;
+  }
+
     document.querySelector('#User').value = '';
     document.querySelector('#Event').value = '';
     document.querySelector('#datetime').value = '';
     document.querySelector('#Comment').value = '';
+    document.querySelector('#Status').checked = true;
+    console.log('Columna creada:', { user, events, date, status, message })
   });
 </script>
 
